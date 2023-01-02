@@ -74,7 +74,7 @@ ThemeData getApplicationTheme() {
       hintStyle: getRegularStyle(
         color: ColorManager.grey1,
       ),
-      labelStyle: getMediumstyle(
+      labelStyle: getMediumStyle(
         color: ColorManager.grey,
       ),
       errorStyle: getRegularStyle(

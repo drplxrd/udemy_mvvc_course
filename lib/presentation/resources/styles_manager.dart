@@ -50,7 +50,7 @@ TextStyle getSemiBoldStyle(
   );
 }
 
-TextStyle getMediumstyle(
+TextStyle getMediumStyle(
     {double fontSize = FontSize.s12, required Color color}) {
   return _getTextStyle(
     fontSize,
