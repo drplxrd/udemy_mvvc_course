@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:udemy_mvvc_course/presentation/resources/assets_manager.dart';
 import 'package:udemy_mvvc_course/presentation/resources/color_manager.dart';
 import 'package:udemy_mvvc_course/presentation/resources/strings_manager.dart';
@@ -17,7 +18,7 @@ class OnBoardingView extends StatefulWidget {
 class _OnBoardingViewState extends State<OnBoardingView> {
   late final List<SliderObject> _list = _getSliderData();
 
-  PageController _pageController = PageController(
+  final PageController _pageController = PageController(
     initialPage: 0,
   );
   List<SliderObject> _getSliderData() => [
@@ -48,6 +49,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
     return Scaffold(
       backgroundColor: ColorManager.white,
       appBar: AppBar(
+        backgroundColor: ColorManager.white,
         elevation: AppSize.s1_5,
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: ColorManager.white,
@@ -64,16 +66,125 @@ class _OnBoardingViewState extends State<OnBoardingView> {
           });
         },
         itemBuilder: ((context, index) {
-          // return onboardingpage
+          return OnboardingPage(
+            _list[index],
+          );
         }),
       ),
+      bottomSheet: Container(
+        color: ColorManager.white,
+        height: AppSize.s100,
+        child: Column(
+          children: [
+            Align(
+              alignment: Alignment.centerRight,
+              child: TextButton(
+                onPressed: () {},
+                child: const Text(
+                  AppStrings.skip,
+                  textAlign: TextAlign.end,
+                ),
+              ),
+            ),
+            _getBottomSheetWidget(),
+          ],
+        ),
+      ),
     );
+  }
+
+  Widget _getBottomSheetWidget() {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        //left Arrow
+        Padding(
+          padding: const EdgeInsets.all(AppPadding.p14),
+          child: InkWell(
+            onTap: () {
+              //goto next slide
+              _pageController.animateToPage(
+                _getPreviousIndex(),
+                duration: const Duration(
+                  milliseconds: DurationConstant.d300,
+                ),
+                curve: Curves.bounceInOut,
+              );
+            },
+            child: SizedBox(
+              height: AppSize.s20,
+              width: AppSize.s20,
+              child: SvgPicture.asset(ImageAssets.leftArrowIc),
+            ),
+          ),
+        ),
+        //circles in between
+        Row(
+          children: List.generate(
+            _list.length,
+            (i) => _getProperCircle(i),
+          ),
+        ),
+        //right arrow
+        Padding(
+          padding: const EdgeInsets.all(AppPadding.p14),
+          child: InkWell(
+            onTap: () {
+              //goto next slide
+              _pageController.animateToPage(
+                _getNextIndex(),
+                duration: const Duration(
+                  milliseconds: DurationConstant.d300,
+                ),
+                curve: Curves.bounceInOut,
+              );
+            },
+            child: SizedBox(
+              height: AppSize.s20,
+              width: AppSize.s20,
+              child: SvgPicture.asset(ImageAssets.rightArrowIc),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Padding _getProperCircle(int index) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: AppPadding.p8),
+      child: Container(
+        width: AppSize.s12,
+        height: AppSize.s12,
+        decoration: BoxDecoration(
+          color: _currentIndex == index
+              ? ColorManager.darkGrey
+              : ColorManager.darkGrey,
+          shape: BoxShape.circle,
+        ),
+        child: _currentIndex == index
+            ? SvgPicture.asset(ImageAssets.solidCircleIc)
+            : SvgPicture.asset(ImageAssets.hollowCircleIc),
+      ),
+    );
+  }
+
+  int _getPreviousIndex() {
+    int previousIndex = _currentIndex--;
+    previousIndex == -1 ? _currentIndex = _list.length - 1 : 0;
+    return _currentIndex;
+  }
+
+  int _getNextIndex() {
+    int nextIndex = _currentIndex++;
+    nextIndex >= _list.length ? _currentIndex = 0 : 0;
+    return _currentIndex;
   }
 }
 
 class OnboardingPage extends StatelessWidget {
-  SliderObject? _sliderObject;
-  OnboardingPage(this._sliderObject, {super.key});
+  final SliderObject? _sliderObject;
+  const OnboardingPage(this._sliderObject, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -107,6 +218,9 @@ class OnboardingPage extends StatelessWidget {
         const SizedBox(
           height: AppSize.s60,
         ),
+        SvgPicture.asset(
+          _sliderObject!.image,
+        )
       ],
     );
   }
