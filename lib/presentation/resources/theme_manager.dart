@@ -60,6 +60,10 @@ ThemeData getApplicationTheme() {
         color: ColorManager.lightGrey,
         fontSize: FontSize.s14,
       ),
+      subtitle2: getSemiBoldStyle(
+        color: ColorManager.primary,
+        fontSize: FontSize.s14,
+      ),
       caption: getRegularStyle(
         color: ColorManager.grey1,
         fontSize: FontSize.s12,

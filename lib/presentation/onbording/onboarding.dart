@@ -50,7 +50,7 @@ class _OnBoardingViewState extends State<OnBoardingView> {
       backgroundColor: ColorManager.white,
       appBar: AppBar(
         backgroundColor: ColorManager.white,
-        elevation: AppSize.s1_5,
+        elevation: AppSize.s0,
         systemOverlayStyle: SystemUiOverlayStyle(
           statusBarColor: ColorManager.white,
           statusBarBrightness: Brightness.dark,
@@ -80,9 +80,10 @@ class _OnBoardingViewState extends State<OnBoardingView> {
               alignment: Alignment.centerRight,
               child: TextButton(
                 onPressed: () {},
-                child: const Text(
+                child: Text(
                   AppStrings.skip,
                   textAlign: TextAlign.end,
+                  style: Theme.of(context).textTheme.subtitle2,
                 ),
               ),
             ),
@@ -94,59 +95,70 @@ class _OnBoardingViewState extends State<OnBoardingView> {
   }
 
   Widget _getBottomSheetWidget() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        //left Arrow
-        Padding(
-          padding: const EdgeInsets.all(AppPadding.p14),
-          child: InkWell(
-            onTap: () {
-              //goto next slide
-              _pageController.animateToPage(
-                _getPreviousIndex(),
-                duration: const Duration(
-                  milliseconds: DurationConstant.d300,
+    return Container(
+      color: ColorManager.primary,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          //left Arrow
+          _currentIndex == 0
+              ? const Padding(
+                  padding: EdgeInsets.all(AppPadding.p14),
+                  child: SizedBox(
+                    height: AppSize.s20,
+                    width: AppSize.s20,
+                  ),
+                )
+              : Padding(
+                  padding: const EdgeInsets.all(AppPadding.p14),
+                  child: InkWell(
+                    onTap: () {
+                      //goto next slide
+                      _pageController.animateToPage(
+                        _getPreviousIndex(),
+                        duration: const Duration(
+                          milliseconds: DurationConstant.d300,
+                        ),
+                        curve: Curves.bounceInOut,
+                      );
+                    },
+                    child: SizedBox(
+                      height: AppSize.s20,
+                      width: AppSize.s20,
+                      child: SvgPicture.asset(ImageAssets.leftArrowIc),
+                    ),
+                  ),
                 ),
-                curve: Curves.bounceInOut,
-              );
-            },
-            child: SizedBox(
-              height: AppSize.s20,
-              width: AppSize.s20,
-              child: SvgPicture.asset(ImageAssets.leftArrowIc),
+          //circles in between
+          Row(
+            children: List.generate(
+              _list.length,
+              (i) => _getProperCircle(i),
             ),
           ),
-        ),
-        //circles in between
-        Row(
-          children: List.generate(
-            _list.length,
-            (i) => _getProperCircle(i),
-          ),
-        ),
-        //right arrow
-        Padding(
-          padding: const EdgeInsets.all(AppPadding.p14),
-          child: InkWell(
-            onTap: () {
-              //goto next slide
-              _pageController.animateToPage(
-                _getNextIndex(),
-                duration: const Duration(
-                  milliseconds: DurationConstant.d300,
-                ),
-                curve: Curves.bounceInOut,
-              );
-            },
-            child: SizedBox(
-              height: AppSize.s20,
-              width: AppSize.s20,
-              child: SvgPicture.asset(ImageAssets.rightArrowIc),
+          //right arrow
+          Padding(
+            padding: const EdgeInsets.all(AppPadding.p14),
+            child: InkWell(
+              onTap: () {
+                //goto next slide
+                _pageController.animateToPage(
+                  _getNextIndex(),
+                  duration: const Duration(
+                    milliseconds: DurationConstant.d300,
+                  ),
+                  curve: Curves.bounceInOut,
+                );
+              },
+              child: SizedBox(
+                height: AppSize.s20,
+                width: AppSize.s20,
+                child: SvgPicture.asset(ImageAssets.rightArrowIc),
+              ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 
@@ -158,13 +170,13 @@ class _OnBoardingViewState extends State<OnBoardingView> {
         height: AppSize.s12,
         decoration: BoxDecoration(
           color: _currentIndex == index
-              ? ColorManager.darkGrey
-              : ColorManager.darkGrey,
+              ? ColorManager.primary
+              : ColorManager.lightGrey,
           shape: BoxShape.circle,
         ),
         child: _currentIndex == index
-            ? SvgPicture.asset(ImageAssets.solidCircleIc)
-            : SvgPicture.asset(ImageAssets.hollowCircleIc),
+            ? SvgPicture.asset(ImageAssets.hollowCircleIc)
+            : SvgPicture.asset(ImageAssets.solidCircleIc),
       ),
     );
   }
