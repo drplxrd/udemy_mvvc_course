@@ -9,7 +9,7 @@ class Test extends StatelessWidget {
   }
 
   void getAppState() {
-    print(MyApp.instance.appState); //Will show 10
+    // print(MyApp.instance.appState); //Will show 10
   }
 
   @override

@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:udemy_mvvc_course/presentation/forgot_password/forgot_password.dart';
-import 'package:udemy_mvvc_course/presentation/login/login.dart';
-import 'package:udemy_mvvc_course/presentation/main/main_view.dart';
-import 'package:udemy_mvvc_course/presentation/onbording/onboarding.dart';
-import 'package:udemy_mvvc_course/presentation/register/register.dart';
-import 'package:udemy_mvvc_course/presentation/resources/color_manager.dart';
-import 'package:udemy_mvvc_course/presentation/resources/strings_manager.dart';
-import 'package:udemy_mvvc_course/presentation/resources/styles_manager.dart';
-import 'package:udemy_mvvc_course/presentation/store_details/store_details.dart';
-
+import '../../presentation/forgot_password/forgot_password.dart';
+import '../../presentation/onbording/onboarding.dart';
+import '../../presentation/resources/color_manager.dart';
+import '../../presentation/resources/strings_manager.dart';
+import '../../presentation/resources/styles_manager.dart';
+import '../../presentation/register/register.dart';
+import '../../presentation/main/main_view.dart';
+import '../../presentation/store_details/store_details.dart';
+import '../../presentation/login/login.dart';
 import '../splash/splash.dart';
 
 class Routes {
@@ -27,17 +26,23 @@ class RouteGenerator{
       case Routes.splashRoute:
         return MaterialPageRoute(builder: (_)=> const SplashView());
       case Routes.onBoardingRoute:
-        return MaterialPageRoute(builder: (_)=> const OnBoardingView());
+        return MaterialPageRoute(builder: (_)=> const OnBoardingView(),
+        );
       case Routes.loginRoute:
-        return MaterialPageRoute(builder: (_)=>  const LoginView());
+        return MaterialPageRoute(builder: (_)=>  const LoginView(),
+        );
       case Routes.forgotPasswordRoute:
-        return MaterialPageRoute(builder: (_)=> const ForgotPasswordView());
+        return MaterialPageRoute(builder: (_)=> const ForgotPasswordView(),
+        );
       case Routes.registerRoute:
-        return MaterialPageRoute(builder: (_)=> const RegisterView());
+        return MaterialPageRoute(builder: (_)=> const RegisterView(),
+        );
       case Routes.mainRoute:
-        return MaterialPageRoute(builder: (_)=> const MainView());
+        return MaterialPageRoute(builder: (_)=> const MainView(),
+        );
       case Routes.storeDetailsRoute:
-        return MaterialPageRoute(builder: (_)=> const StoreDetailsView());
+        return MaterialPageRoute(builder: (_)=> const StoreDetailsView(),
+        );
       default:
         return unDefinedRoute();
     }
@@ -49,11 +54,13 @@ class RouteGenerator{
       appBar: AppBar(
         backgroundColor: ColorManager.primary,
         centerTitle: true,
-        title: Text(AppStrings.noRouteFound, style: getRegularStyle(color: ColorManager.white),),
+        title: Text(AppStrings.noRouteFound, style: getRegularStyle(color: ColorManager.white),
+        ),
 
       ),
       body: Center(
-        child: Text(AppStrings.noRouteFound, style: getRegularStyle(color: ColorManager.white),),
+        child: Text(AppStrings.noRouteFound, style: getRegularStyle(color: ColorManager.white),
+        ),
       ),
     )
     );
