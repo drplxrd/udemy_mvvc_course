@@ -1,7 +1,12 @@
+// ignore_for_file: avoid_types_as_parameter_names, non_constant_identifier_names
+
 import 'dart:async';
 
 import 'package:udemy_mvvc_course/domain/model.dart';
 import 'package:udemy_mvvc_course/presentation/base/baseviewmodel.dart';
+
+import '../resources/assets_manager.dart';
+import '../resources/strings_manager.dart';
 
 class OnBoardingViewModel extends BaseViewModel
     with OnBoardingViewModelInputs, OnBoardingViewModelOutputs {
@@ -9,14 +14,20 @@ class OnBoardingViewModel extends BaseViewModel
   final StreamController _streamController =
       StreamController<SlideViewObject>();
 
+  late final List<SliderObject> _list;
+  int _currentIndex = 0;
+
   //inputs
   @override
   void dispose() {
-    // TODO: implement dispose
+    _streamController.close();
   }
+
   @override
   void start() {
-    // TODO: implement start
+    _list = _getSliderData();
+    //send this sliderData to our view
+    _postDataToView();
   }
 
   @override
@@ -32,6 +43,45 @@ class OnBoardingViewModel extends BaseViewModel
   @override
   void onPageChanged(int index) {
     // TODO: implement onPageChanged
+  }
+  //input section
+  @override
+  Sink get inputSliderViewObject => _streamController.sink;
+  //Output section
+  @override
+  Stream<SlideViewObject> get outputSliderViewObject =>
+      _streamController.stream.map((slideViewObject) => slideViewObject);
+  //private functions of viewmodels
+  List<SliderObject> _getSliderData() => [
+        SliderObject(
+          AppStrings.onBoardingTitle1,
+          AppStrings.onBoardingSubTitle1,
+          ImageAssets.onboardingLogo1,
+        ),
+        SliderObject(
+          AppStrings.onBoardingTitle2,
+          AppStrings.onBoardingSubTitle2,
+          ImageAssets.onboardingLogo2,
+        ),
+        SliderObject(
+          AppStrings.onBoardingTitle3,
+          AppStrings.onBoardingSubTitle3,
+          ImageAssets.onboardingLogo3,
+        ),
+        SliderObject(
+          AppStrings.onBoardingTitle4,
+          AppStrings.onBoardingSubTitle4,
+          ImageAssets.onboardingLogo4,
+        ),
+      ];
+  _postDataToView() {
+    inputSliderViewObject.add(
+      SlideViewObject(
+        _list[_currentIndex],
+        _currentIndex,
+        _list.length,
+      ),
+    );
   }
 }
 
