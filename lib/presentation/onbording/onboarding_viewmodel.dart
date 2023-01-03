@@ -1,10 +1,8 @@
 // ignore_for_file: avoid_types_as_parameter_names, non_constant_identifier_names
 
 import 'dart:async';
-
 import 'package:udemy_mvvc_course/domain/model.dart';
 import 'package:udemy_mvvc_course/presentation/base/baseviewmodel.dart';
-
 import '../resources/assets_manager.dart';
 import '../resources/strings_manager.dart';
 
@@ -12,7 +10,7 @@ class OnBoardingViewModel extends BaseViewModel
     with OnBoardingViewModelInputs, OnBoardingViewModelOutputs {
   //Stream Controllers for state management
   final StreamController _streamController =
-      StreamController<SlideViewObject>();
+      StreamController<SliderViewObject>();
 
   late final List<SliderObject> _list;
   int _currentIndex = 0;
@@ -31,26 +29,35 @@ class OnBoardingViewModel extends BaseViewModel
   }
 
   @override
-  void goNext() {
-    // TODO: implement goNext
+  int goNext() {
+    int nextIndex = _currentIndex++;
+    nextIndex >= _list.length ? _currentIndex = 0 : 0;
+    _postDataToView();
+    return _currentIndex;
   }
 
   @override
-  void goPrevious() {
-    // TODO: implement goPrevious
+  int goPrevious() {
+    int previousIndex = _currentIndex--;
+    previousIndex == -1 ? _currentIndex = _list.length - 1 : 0;
+    _postDataToView();
+
+    return _currentIndex;
   }
 
   @override
   void onPageChanged(int index) {
-    // TODO: implement onPageChanged
+    _currentIndex = index;
+    _postDataToView();
   }
+
   //input section
   @override
   Sink get inputSliderViewObject => _streamController.sink;
   //Output section
   @override
-  Stream<SlideViewObject> get outputSliderViewObject =>
-      _streamController.stream.map((slideViewObject) => slideViewObject);
+  Stream<SliderViewObject> get outputSliderViewObject =>
+      _streamController.stream.map((sliderViewObject) => sliderViewObject);
   //private functions of viewmodels
   List<SliderObject> _getSliderData() => [
         SliderObject(
@@ -76,7 +83,7 @@ class OnBoardingViewModel extends BaseViewModel
       ];
   _postDataToView() {
     inputSliderViewObject.add(
-      SlideViewObject(
+      SliderViewObject(
         _list[_currentIndex],
         _currentIndex,
         _list.length,
@@ -86,7 +93,6 @@ class OnBoardingViewModel extends BaseViewModel
 }
 
 //Sink is an input and Stream is an output
-
 //inputs mean that our view model will receive from our view
 abstract class OnBoardingViewModelInputs {
   void goNext(); //When a user clicks on right arrow or swipe
@@ -99,13 +105,13 @@ abstract class OnBoardingViewModelInputs {
 
 //Outputs mean data or results from viewmodel to view
 abstract class OnBoardingViewModelOutputs {
-  Stream<SlideViewObject> get outputSliderViewObject;
+  Stream<SliderViewObject> get outputSliderViewObject;
 }
 
-class SlideViewObject {
+class SliderViewObject {
   SliderObject sliderObject;
   int noOfSlides;
   int currentIndex;
 
-  SlideViewObject(this.sliderObject, this.currentIndex, this.noOfSlides);
+  SliderViewObject(this.sliderObject, this.currentIndex, this.noOfSlides);
 }
