@@ -1,3 +1,5 @@
+//All values are nullable in responses
+// From here to app_api to model.dart
 class BaseResponse {
   int? status;
   String? message;
@@ -8,7 +10,11 @@ class CustomerResponse {
   String? name;
   int? numOfNotifications;
 
-  CustomerResponse(this.id, this.name, this.numOfNotifications);
+  CustomerResponse(
+    this.id,
+    this.name,
+    this.numOfNotifications,
+  );
 
 // from json
   factory CustomerResponse.fromJson(Map<String, dynamic> json) =>
@@ -31,7 +37,11 @@ class ContactsResponse {
   String? phone;
   String? link;
 
-  ContactsResponse(this.email, this.phone, this.link);
+  ContactsResponse(
+    this.email,
+    this.phone,
+    this.link,
+  );
 
 // from json
   factory ContactsResponse.fromJson(Map<String, dynamic> json) =>
@@ -53,7 +63,10 @@ class AuthenticationResponse extends BaseResponse {
   CustomerResponse? customer;
   ContactsResponse? contacts;
 
-  AuthenticationResponse(this.customer, this.contacts);
+  AuthenticationResponse(
+    this.customer,
+    this.contacts,
+  );
 
 // from json
   factory AuthenticationResponse.fromJson(Map<String, dynamic> json) =>
