@@ -1,53 +1,68 @@
-import 'package:json_annotation/json_annotation.dart';
-
-@JsonSerializable()
 class BaseResponse {
-  @JsonKey(name: "status")
   int? status;
-  @JsonKey(name: "message")
   String? message;
 }
 
-@JsonSerializable()
 class CustomerResponse {
-  @JsonKey(name: "id")
   String? id;
-  @JsonKey(name: "name")
   String? name;
-  @JsonKey(name: "numOfNotifications")
   int? numOfNotifications;
 
   CustomerResponse(this.id, this.name, this.numOfNotifications);
 
 // from json
+  factory CustomerResponse.fromJson(Map<String, dynamic> json) =>
+      CustomerResponse(
+        json["id"] as String,
+        json["name"] as String,
+        json["numOfNotifications"] as int,
+      );
 
 // to json
+  Map<String, dynamic> toJson() => {
+        "id": id,
+        "name": name,
+        "numOfNotifications": numOfNotifications,
+      };
 }
 
-@JsonSerializable()
 class ContactsResponse {
-  @JsonKey(name: "email")
   String? email;
-  @JsonKey(name: "phone")
   String? phone;
-  @JsonKey(name: "link")
   String? link;
 
   ContactsResponse(this.email, this.phone, this.link);
 
 // from json
+  factory ContactsResponse.fromJson(Map<String, dynamic> json) =>
+      ContactsResponse(
+        json["email"] as String,
+        json["phone"] as String,
+        json["link"] as String,
+      );
+
 // to json
+  Map<String, dynamic> toJson() => {
+        "email": email,
+        "phone": phone,
+        "link": link,
+      };
 }
 
-@JsonSerializable()
 class AuthenticationResponse extends BaseResponse {
-  @JsonKey(name: "customer")
   CustomerResponse? customer;
-  @JsonKey(name: "contacts")
   ContactsResponse? contacts;
 
   AuthenticationResponse(this.customer, this.contacts);
 
 // from json
+  factory AuthenticationResponse.fromJson(Map<String, dynamic> json) =>
+      AuthenticationResponse(CustomerResponse.fromJson(json["customer"]),
+          ContactsResponse.fromJson(json["contacts"]));
+
 // to json
+  Map<String, dynamic> toJson() => {
+        "customer": customer!.toJson(),
+        "contacts": contacts!.toJson(),
+      };
 }
