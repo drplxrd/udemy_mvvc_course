@@ -38,6 +38,7 @@ dependencies:
   json_annotation: ^4.7.0
   retrofit_generator: ^4.2.0
   analyzer: ^5.2.0
+  dartz: ^0.10.1
 
 dev_dependencies:
   flutter_test:
