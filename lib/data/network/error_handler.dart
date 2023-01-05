@@ -1,5 +1,5 @@
 // ignore_for_file: constant_identifier_names
-
+import 'package:dio/dio.dart';
 import 'failure.dart';
 
 enum DataSource {
@@ -16,6 +16,40 @@ enum DataSource {
   SEND_TIMEOUT,
   CACHE_ERROR,
   NO_INTERNET_CONNECTION,
+  DEFAULT,
+}
+
+class ErrorHandler implements Exception {
+  late Failure failure;
+
+  ErrorHandler.handler(dynamic error) {
+    if (error is DioError) {
+      //dio error is error from api response
+
+      failure = _handleError(error);
+    } else {
+      // default errorr
+      failure = DataSource.DEFAULT.getFailure();
+    }
+  }
+
+  Failure _handleError(DioError error) {
+    switch (error.type) {
+      case DioErrorType.connectTimeout:
+        return DataSource.CONNECT_TIMEOUT.getFailure();
+      case DioErrorType.sendTimeout:
+        return DataSource.SEND_TIMEOUT.getFailure();
+      case DioErrorType.receiveTimeout:
+        return DataSource.RECEIVE_TIMEOUT.getFailure();
+      case DioErrorType.response:
+        // TODO: Handle this case
+        break;
+      case DioErrorType.cancel:
+        return DataSource.CANCEL.getFailure();
+      case DioErrorType.other:
+        return DataSource.DEFAULT.getFailure();
+    }
+  }
 }
 
 extension DataSourceExtension on DataSource {
@@ -76,10 +110,15 @@ extension DataSourceExtension on DataSource {
           ResponseCode.NO_INTERNET_CONNECTION,
           ResponseMessage.NO_INTERNET_CONNECTION,
         );
+      case DataSource.DEFAULT:
+        return Failure(
+          ResponseCode.DEFAULT,
+          ResponseMessage.DEFAULT,
+        );
       default:
         return Failure(
-          ResponseCode.UNKNOWN,
-          ResponseMessage.UNKNOWN,
+          ResponseCode.DEFAULT,
+          ResponseMessage.DEFAULT,
         );
     }
   }
@@ -96,7 +135,7 @@ class ResponseCode {
   static const int INTERNAL_SERVER_ERROR = 500; //server crash or arror
 
   //Local status codes
-  static const int UNKNOWN = -1;
+  static const int DEFAULT = -1;
   static const int CONNECT_TIMEOUT = -2;
   static const int CANCEL = -3;
   static const int RECEIVE_TIMEOUT = -5;
@@ -121,8 +160,8 @@ class ResponseMessage {
   static const String INTERNAL_SERVER_ERROR =
       "something went wrong"; //server crash or arror
 
-  //Local status codes
-  static const String UNKNOWN = "something went wrong, try again later";
+  //LOCAL STATUS CODES
+  static const String DEFAULT = "something went wrong, try again later";
   static const String CONNECT_TIMEOUT = "time out error, try again later";
   static const String CANCEL = "request was cancled, try again later";
   static const String RECEIVE_TIMEOUT = "timeout error, try again later";
