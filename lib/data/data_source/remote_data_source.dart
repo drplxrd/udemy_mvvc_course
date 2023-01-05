@@ -1,6 +1,8 @@
-import 'package:udemy_mvvc_course/data/network/app_api.dart';
-import 'package:udemy_mvvc_course/data/request/request.dart';
-import 'package:udemy_mvvc_course/data/responses/responses.dart';
+// ignore_for_file: prefer_final_fields
+
+import '../../data/network/app_api.dart';
+import '../../data/request/request.dart';
+import '../../data/responses/responses.dart';
 
 abstract class RemoteDataSource {
   Future<AuthenticationResponse> login(LoginRequest loginRequest);

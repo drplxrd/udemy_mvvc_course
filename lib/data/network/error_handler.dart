@@ -29,6 +29,7 @@ class ErrorHandler implements Exception {
       failure = _handleError(error);
     } else {
       // default errorr
+
       failure = DataSource.DEFAULT.getFailure();
     }
   }
@@ -134,7 +135,7 @@ class ResponseCode {
   static const int NOT_FOUND = 404; //falure to reach the api, or api not found
   static const int INTERNAL_SERVER_ERROR = 500; //server crash or arror
 
-  //Local status codes
+  //LOCAL STATUS CODES
   static const int DEFAULT = -1;
   static const int CONNECT_TIMEOUT = -2;
   static const int CANCEL = -3;

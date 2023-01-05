@@ -1,8 +1,8 @@
 // ignore_for_file: avoid_types_as_parameter_names, non_constant_identifier_names
 
 import 'dart:async';
-import 'package:udemy_mvvc_course/domain/model.dart';
-import 'package:udemy_mvvc_course/presentation/base/baseviewmodel.dart';
+import '../../domain/model.dart';
+import '../../presentation/base/baseviewmodel.dart';
 import '../resources/assets_manager.dart';
 import '../resources/strings_manager.dart';
 

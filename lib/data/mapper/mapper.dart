@@ -1,6 +1,5 @@
 //convert the response into non nullable objects
 // ignore_for_file: constant_identifier_names
-
 import 'package:udemy_mvvc_course/app/extenstions.dart';
 import 'package:udemy_mvvc_course/data/responses/responses.dart';
 import '../../domain/model.dart';
@@ -31,7 +30,7 @@ extension ContactsResponseMapper on ContactsResponse? {
 extension AuthenticationResponseMapper on AuthenticationResponse? {
   Authentication toDomain() {
     return Authentication(
-      this?.contacts.toDomain(),
+      this?.contacts?.toDomain(),
       this?.customer?.toDomain(),
     );
   }

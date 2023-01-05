@@ -1,15 +1,14 @@
-// ignore_for_file: must_be_immutable
+// ignore_for_file: must_be_immutable, prefer_final_fields, no_leading_underscores_for_local_identifiers
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:udemy_mvvc_course/presentation/resources/assets_manager.dart';
-import 'package:udemy_mvvc_course/presentation/resources/color_manager.dart';
-import 'package:udemy_mvvc_course/presentation/resources/strings_manager.dart';
-import 'package:udemy_mvvc_course/presentation/resources/values_manager.dart';
-
+import '../../presentation/resources/assets_manager.dart';
+import '../../presentation/resources/color_manager.dart';
+import '../../presentation/resources/strings_manager.dart';
+import '../../presentation/resources/values_manager.dart';
 import '../../domain/model.dart';
-import 'onboarding_viewmodel.dart';
+import './onboarding_viewmodel.dart';
 
 class OnBoardingView extends StatefulWidget {
   const OnBoardingView({Key? key}) : super(key: key);
