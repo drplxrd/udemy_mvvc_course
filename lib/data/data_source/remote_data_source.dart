@@ -3,7 +3,7 @@ import 'package:udemy_mvvc_course/data/request/request.dart';
 import 'package:udemy_mvvc_course/data/responses/responses.dart';
 
 abstract class RemoteDataSource {
-  Future<AuthenticationResponse> logic(LoginRequest loginRequest);
+  Future<AuthenticationResponse> login(LoginRequest loginRequest);
 }
 
 class RemoteDataSourceImplementer implements RemoteDataSource {
@@ -12,7 +12,7 @@ class RemoteDataSourceImplementer implements RemoteDataSource {
     this._appServiceClient,
   );
   @override
-  Future<AuthenticationResponse> logic(LoginRequest loginRequest) async {
+  Future<AuthenticationResponse> login(LoginRequest loginRequest) async {
     return await _appServiceClient.login(
       loginRequest.email,
       loginRequest.password,
