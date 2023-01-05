@@ -35,3 +35,30 @@ class ResponseCode {
   static const int CACHE_ERROR = -7;
   static const int NO_INTERNET_CONNECTION = -8;
 }
+
+class ResponseMessage {
+  //API STATUS CODES
+  static const String SUCCESS = "success"; //success with data
+  static const String NO_CONTENT =
+      "success with no content"; //success with no content
+  static const String BAD_REQUEST =
+      "Bad request, try again"; //api rejected the request or badrequest
+  static const String FORBIDDEN =
+      "Forbidden request, try again"; //api rejected request
+  static const String UNAUTHORISED =
+      "user is unauthenticated, try again"; //credentials unmatched
+  static const String NOT_FOUND =
+      "Url is not found, try again later"; //falure to reach the api, or api not found
+  static const String INTERNAL_SERVER_ERROR =
+      "something went wrong"; //server crash or arror
+
+  //Local status codes
+  static const String UNKNOWN = "something went wrong, try again later";
+  static const String CONNECT_TIMEOUT = "time out error, try again later";
+  static const String CANCEL = "request was cancled, try again later";
+  static const String RECEIVE_TIMEOUT = "timeout error, try again later";
+  static const String SEND_TIMEOUT = "timeout error, try again later";
+  static const String CACHE_ERROR = "cache error, try again later";
+  static const String NO_INTERNET_CONNECTION =
+      "please check your interner connection";
+}
