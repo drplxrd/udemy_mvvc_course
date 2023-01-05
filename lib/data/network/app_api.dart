@@ -8,7 +8,12 @@ abstract class AppServiceClient {
   factory AppServiceClient(Dio dio, {String baseUrl}) = _AppServiceClient;
 
   @POST("/customers/login")
-  Future<AuthenticationResponse> login();
+  Future<AuthenticationResponse> login(
+    @Field("email") String email,
+    @Field("password") String password,
+    @Field("imei") String imei,
+    @Field("deviceType") String deviceType,
+  );
 }
 
 class _AppServiceClient implements AppServiceClient {
@@ -18,7 +23,12 @@ class _AppServiceClient implements AppServiceClient {
   _AppServiceClient(this._dio, {this.baseUrl});
 
   @override
-  Future<AuthenticationResponse> login() async {
+  Future<AuthenticationResponse> login(
+    @Field("email") String email,
+    @Field("password") String password,
+    @Field("imei") String imei,
+    @Field("deviceType") String deviceType,
+  ) async {
     final response = await _dio.post("$baseUrl/customers/login");
     return response.data;
   }
