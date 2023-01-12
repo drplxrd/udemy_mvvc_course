@@ -38,13 +38,33 @@ class ErrorHandler implements Exception {
     switch (error.type) {
       case DioErrorType.connectTimeout:
         return DataSource.CONNECT_TIMEOUT.getFailure();
+
       case DioErrorType.sendTimeout:
         return DataSource.SEND_TIMEOUT.getFailure();
+
       case DioErrorType.receiveTimeout:
         return DataSource.RECEIVE_TIMEOUT.getFailure();
+
       case DioErrorType.response:
-        // TODO: Handle this case
-        break;
+        switch (error.response?.statusCode) {
+          case ResponseCode.BAD_REQUEST:
+            return DataSource.BAD_REQUEST.getFailure();
+
+          case ResponseCode.FORBIDDEN:
+            return DataSource.FORBIDDEN.getFailure();
+
+          case ResponseCode.UNAUTHORISED:
+            return DataSource.UNAUTHORISED.getFailure();
+
+          case ResponseCode.NOT_FOUND:
+            return DataSource.NOT_FOUND.getFailure();
+
+          case ResponseCode.INTERNAL_SERVER_ERROR:
+            return DataSource.INTERNAL_SERVER_ERROR.getFailure();
+
+          default:
+            return DataSource.DEFAULT.getFailure();
+        }
       case DioErrorType.cancel:
         return DataSource.CANCEL.getFailure();
       case DioErrorType.other:
