@@ -7,7 +7,7 @@ import '../../presentation/resources/assets_manager.dart';
 import '../../presentation/resources/color_manager.dart';
 import '../../presentation/resources/strings_manager.dart';
 import '../../presentation/resources/values_manager.dart';
-import '../../domain/model.dart';
+import '../../domain/model/model.dart';
 import './onboarding_viewmodel.dart';
 
 class OnBoardingView extends StatefulWidget {

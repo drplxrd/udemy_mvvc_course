@@ -3,11 +3,11 @@
 import 'package:udemy_mvvc_course/data/data_source/remote_data_source.dart';
 import 'package:udemy_mvvc_course/data/network/error_handler.dart';
 import 'package:udemy_mvvc_course/data/network/network_info.dart';
-import 'package:udemy_mvvc_course/domain/model.dart';
+import 'package:udemy_mvvc_course/domain/model/model.dart';
 import 'package:udemy_mvvc_course/data/request/request.dart';
 import '../../data/network/failure.dart';
 import 'package:dartz/dartz.dart';
-import '../../domain/repository.dart';
+import '../../domain/repository/repository.dart';
 import '../mapper/mapper.dart';
 
 class RepositoryImpl extends Repository {

@@ -2,7 +2,7 @@
 // ignore_for_file: constant_identifier_names
 import 'package:udemy_mvvc_course/app/extenstions.dart';
 import 'package:udemy_mvvc_course/data/responses/responses.dart';
-import '../../domain/model.dart';
+import '../../domain/model/model.dart';
 
 const EMPTY = "";
 const ZERO = 0;
