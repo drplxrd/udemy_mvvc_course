@@ -12,15 +12,15 @@ Future<DeviceInfo> getDeviceDetails() async {
 
   try {
     if (Platform.isAndroid) {
-      AndroidDeviceInfo androidInfo = await deviceInfoPlugin.androidInfo;
-      name = androidInfo.model;
-      identifier = androidInfo.id;
-      version = androidInfo.version.release;
+      AndroidDeviceInfo build = await deviceInfoPlugin.androidInfo;
+      name = "${build.brand} ${build.model}";
+      identifier = build.id;
+      version = build.version.codename;
     } else if (Platform.isIOS) {
-      IosDeviceInfo iosInfo = await deviceInfoPlugin.iosInfo;
-      name = iosInfo.name!;
-      identifier = iosInfo.identifierForVendor!;
-      version = iosInfo.systemVersion!;
+      IosDeviceInfo build = await deviceInfoPlugin.iosInfo;
+      name = "${build.name!} ${build.model!}";
+      identifier = build.identifierForVendor!;
+      version = build.systemVersion!;
     }
   } catch (e) {
     return DeviceInfo(
