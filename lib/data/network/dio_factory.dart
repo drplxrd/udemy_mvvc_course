@@ -1,6 +1,8 @@
 // ignore_for_file: constant_identifier_names, no_leading_underscores_for_local_identifiers
 
 import 'package:dio/dio.dart';
+import 'package:flutter/foundation.dart';
+import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:udemy_mvvc_course/app/constants.dart';
 
 const String APPLICATION_JSON = "application/json";
@@ -27,6 +29,18 @@ class DioFactory {
       receiveTimeout: _timeOut,
       headers: headers,
     );
+
+    //logging data in debugmode
+    if (kReleaseMode) {
+      print("Release mode, please disable logs"); //!Bug!!!!
+    } else {
+      dio.interceptors.add(PrettyDioLogger(
+        requestHeader: true,
+        requestBody: true,
+        responseHeader: true,
+      ));
+    }
+
     return dio;
   }
 }
